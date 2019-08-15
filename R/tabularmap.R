@@ -1,0 +1,62 @@
+#' @title Create Tile-Grid
+#'
+#' @description A ggplot2-based tabularmap that places a coordinated dataset in a rectangle.
+#' @import ggplot2
+#' @import rlang
+#' @importFrom dplyr select
+#' @param data data.frame. Contain x, y variables used as coordinates.
+#' @param fill Fill colour variable.
+#' @param label Label variable.
+#' @param ... All other arguments passed on to [ggplot2::geom_text()] include label `family`.
+#' @examples
+#' library(ggplot2)
+#' tabularmap(jpn77, label = prefecture_en, size = 3)
+#' tabularmap(jpn77, fill = region_en, label = prefecture_en, size = 3)
+#' tabularmap(jpn77, fill = region_en, label = prefecture_en, size = 3) +
+#'   theme_tabularmap()
+#' tabularmap(data.frame(
+#'   x = rep(c(1,2,3), each = 3),
+#'   y = rep(c(1,2,3), times = 3),
+#'   fill = seq.int(9),
+#'   label = letters[1:9]),
+#'   fill = fill, label = label)
+#' @rdname tabularmap
+#' @export
+tabularmap <- function(data, fill = 1, label, ...) {
+  x <- y <- value <- NULL
+  data_adjust <-
+    dplyr::select(data,
+                  x,
+                  y,
+                  value = !! rlang::enquo(fill),
+                  label = !! rlang::enquo(label))
+  p <- ggplot2::ggplot(data_adjust,
+                       ggplot2::aes(xmin = x, ymin = y, xmax = x + 1, ymax = y + 1)) +
+    ggplot2::geom_rect(ggplot2::aes(fill = value),
+                       color = "white") +
+    ggplot2::geom_text(ggplot2::aes(x, y, label = !! rlang::quo(label)),
+                       nudge_x = 0.5, nudge_y = 0.5,
+                       ...) +
+    ggplot2::coord_equal() +
+    ggplot2::scale_x_continuous(limits = c(1, max(data_adjust$x) + 1),
+                       expand = ggplot2::expand_scale(add = c(0.5, 0.5))) +
+    ggplot2::scale_y_continuous(limits = c(1, max(data_adjust$y) + 1),
+                       expand = ggplot2::expand_scale(add = c(0.5, 0.5)))
+  suppressWarnings(print(p))
+}
+
+#' @title Tabularmap theme
+#'
+#' @description Custom ggplot2 theme for tabulamap
+#' @import ggplot2
+#' @param ... all other arguments passed on to [ggplot2::theme_minimal()]
+#' @rdname theme_tabularmap
+#' @export
+theme_tabularmap <- function(...) {
+  ggplot2::theme_minimal(...) +
+    ggplot2::theme(
+        panel.grid = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank(),
+        axis.text  = ggplot2::element_blank(),
+        axis.title = ggplot2::element_blank())
+}
