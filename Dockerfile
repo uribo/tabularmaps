@@ -13,4 +13,6 @@ RUN set -x && \
 RUN set -x && \
   install2.r --error \
     jpndistrict && \
+  installGithub.r \
+    klutometis/roxygen && \
   rm -rf /tmp/downloaded_packages/ /tmp/*.rds

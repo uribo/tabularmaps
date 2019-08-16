@@ -14,6 +14,12 @@ jpn77 <-
 ) %>%
   left_join(jpndistrict::jpnprefs %>%
               select(-capital_latitude, -capital_longitude) %>%
+              mutate(region = if_else(region %in% c("九州", "沖縄"),
+                                                    "九州・沖縄",
+                                                    region),
+                            region_en = if_else(region_en %in% c("Kyushu"),
+                                                "Kyushu_Okinawa",
+                                                region_en)) %>%
               mutate_at(vars(starts_with("region")), .funs = forcats::as_factor),
             by = "jis_code") %>%
   add_row(.after = 6) %>%
@@ -23,5 +29,3 @@ jpn77 <-
   filter(!is.na(jis_code))
 
 usethis::use_data(jpn77, overwrite = TRUE)
-
-
