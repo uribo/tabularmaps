@@ -2,6 +2,8 @@ FROM rocker/geospatial:3.6.2
 
 RUN set -x && \
   apt-get update && \
+  apt-get install -y --no-install-recommends \
+    fonts-ipaexfont && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 

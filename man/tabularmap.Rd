@@ -31,4 +31,10 @@ tabularmap(data.frame(
   fill = seq.int(9),
   label = letters[seq.int(9)]),
   fill = fill, label = label)
+# Global (ISO 3166 code)
+tabularmap(iso3166, fill = 1, label = iso2c) +
+  theme_tabularmap() +
+  guides(fill = FALSE)
+tabularmap(iso3166, fill = continent, label = iso3c) +
+  theme_tabularmap()
 }
