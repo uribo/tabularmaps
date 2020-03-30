@@ -1,4 +1,4 @@
-FROM rocker/geospatial:3.6.0
+FROM rocker/geospatial:3.6.2
 
 RUN set -x && \
   apt-get update && \
@@ -11,8 +11,10 @@ RUN set -x && \
   echo "GITHUB_PAT=$GITHUB_PAT" >> /usr/local/lib/R/etc/Renviron
 
 RUN set -x && \
-  install2.r --error \
-    jpndistrict && \
-  installGithub.r \
-    klutometis/roxygen && \
+  install2.r --error --repos 'http://mran.revolutionanalytics.com/snapshot/2020-03-29' \
+    countrycode \
+    ggplot2 \
+    zipangu \
+    roxygen2 \
+    roxygen2md && \
   rm -rf /tmp/downloaded_packages/ /tmp/*.rds

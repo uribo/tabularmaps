@@ -39,15 +39,15 @@ tabularmap <- function(data, fill = 1, label, ...) {
                        ...) +
     ggplot2::coord_equal() +
     ggplot2::scale_x_continuous(limits = c(1, max(data_adjust$x) + 1),
-                       expand = ggplot2::expand_scale(add = c(0.5, 0.5))) +
+                       expand = ggplot2::expansion(add = c(0.5, 0.5))) +
     ggplot2::scale_y_continuous(limits = c(1, max(data_adjust$y) + 1),
-                       expand = ggplot2::expand_scale(add = c(0.5, 0.5)))
+                       expand = ggplot2::expansion(add = c(0.5, 0.5)))
   suppressWarnings(print(p))
 }
 
 #' @title Tabularmap theme
 #'
-#' @description Custom ggplot2 theme for tabulamap
+#' @description Custom ggplot2 theme for tabulamap.
 #' @import ggplot2
 #' @param ... all other arguments passed on to [ggplot2::theme_minimal()]
 #' @rdname theme_tabularmap

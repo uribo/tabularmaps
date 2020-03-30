@@ -20,14 +20,15 @@ A ggplot2-based tabularmap that places a coordinated dataset in a rectangle.
 }
 \examples{
 library(ggplot2)
-tabularmap(jpn77, label = prefecture_en, size = 3)
-tabularmap(jpn77, fill = region_en, label = prefecture_en, size = 3)
-tabularmap(jpn77, fill = region_en, label = prefecture_en, size = 3) +
-  theme_tabularmap()
+tabularmap(jpn77, label = prefecture, size = 3)
+tabularmap(jpn77, fill = region, label = prefecture, size = 3)
+tabularmap(jpn77, fill = region, label = prefecture, size = 3) +
+  theme_tabularmap() +
+  scale_fill_jpregion(lang = "en")
 tabularmap(data.frame(
   x = rep(c(1,2,3), each = 3),
   y = rep(c(1,2,3), times = 3),
   fill = seq.int(9),
-  label = letters[1:9]),
+  label = letters[seq.int(9)]),
   fill = fill, label = label)
 }
