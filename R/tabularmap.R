@@ -10,15 +10,16 @@
 #' @param ... All other arguments passed on to [ggplot2::geom_text()] include label `family`.
 #' @examples
 #' library(ggplot2)
-#' tabularmap(jpn77, label = prefecture_en, size = 3)
-#' tabularmap(jpn77, fill = region_en, label = prefecture_en, size = 3)
-#' tabularmap(jpn77, fill = region_en, label = prefecture_en, size = 3) +
-#'   theme_tabularmap()
+#' tabularmap(jpn77, label = prefecture, size = 3)
+#' tabularmap(jpn77, fill = region, label = prefecture, size = 3)
+#' tabularmap(jpn77, fill = region, label = prefecture, size = 3) +
+#'   theme_tabularmap() +
+#'   scale_fill_jpregion(lang = "en")
 #' tabularmap(data.frame(
 #'   x = rep(c(1,2,3), each = 3),
 #'   y = rep(c(1,2,3), times = 3),
 #'   fill = seq.int(9),
-#'   label = letters[1:9]),
+#'   label = letters[seq.int(9)]),
 #'   fill = fill, label = label)
 #' @rdname tabularmap
 #' @export
@@ -60,3 +61,36 @@ theme_tabularmap <- function(...) {
         axis.text  = ggplot2::element_blank(),
         axis.title = ggplot2::element_blank())
 }
+
+#' @title Coloring the tabularmaps by region in Japan
+#'
+#' @description Custom ggplot2 scale for tabulamap.
+#' @import ggplot2
+#' @param lang Select whether the region variable is Japanese (`jp`) or English (`en`).
+#' @param ... all other arguments passed on to [ggplot2::scale_fill_manual()]
+#' @rdname scale_fill_jpregion
+#' @export
+scale_fill_jpregion <- function(lang, ...) {
+  lang <-
+    rlang::arg_match(lang,
+                     c("jp", "en"))
+  cols <-
+    c("#FF9999", "#FFDB72", "#CCFF99", "#72FF95", "#99FFFF",
+      "#7295FF", "#CC99FF", "#FF72DB")
+  if (lang == "jp") {
+
+    cols <-
+      stats::setNames(cols,
+                      c("\u5317\u6d77\u9053", "\u6771\u5317", "\u95a2\u6771", "\u4e2d\u90e8",
+                        "\u95a2\u897f", "\u4e2d\u56fd", "\u56db\u56fd", "\u4e5d\u5dde"))
+  } else {
+    cols <-
+      stats::setNames(cols,
+               c("Hokkaido", "Tohoku", "Kanto", "Chubu",
+                 "Kansai", "Chugoku", "Shikoku", "Kyushu"))
+  }
+  ggplot2::scale_fill_manual(
+    values = cols,
+    ...)
+}
+
