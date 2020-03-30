@@ -78,7 +78,6 @@ scale_fill_jpregion <- function(lang, ...) {
     c("#FF9999", "#FFDB72", "#CCFF99", "#72FF95", "#99FFFF",
       "#7295FF", "#CC99FF", "#FF72DB")
   if (lang == "jp") {
-
     cols <-
       stats::setNames(cols,
                       c("\u5317\u6d77\u9053", "\u6771\u5317", "\u95a2\u6771", "\u4e2d\u90e8",

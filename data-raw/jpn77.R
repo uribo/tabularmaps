@@ -34,6 +34,10 @@ jpn77 <-
   mutate(x = rep(seq.int(7), each = 7),
          y = rep(seq.int(7), times = 7)) %>%
   filter(!is.na(jis_code)) %>%
-  select(jis_code, prefecture, region, major_island, ends_with("kanji"), x, y)
-
+  select(jis_code, prefecture, region, major_island, ends_with("kanji"), x, y) %>%
+  mutate(y = if_else(y == 7L & x == 5L,
+                     6L,
+                     if_else(y == 6L & x == 5L,
+                             7L,
+                             y)))
 usethis::use_data(jpn77, overwrite = TRUE)
