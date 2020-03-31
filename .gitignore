@@ -3,3 +3,4 @@
 .RData
 .env
 inst/doc
+.DS_Store
