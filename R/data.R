@@ -14,6 +14,16 @@
 #' }
 "jpn77"
 
+#' @title Special wards of Tokyo
+#'
+#' @description Tokyo 23 wards dataset.
+#' @format A data frame with 23 rows 5 variables:
+#' - no: Identifical number
+#' - ward: Name
+#' - ward_kanji: Names in Kanji
+#' - x, y: Coordinates for displaying as tabularmap
+"tky23"
+
 #' @title Country list
 #'
 #' @description A data frame include ISO-3166 codes.
