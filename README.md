@@ -43,7 +43,17 @@ tabularmap(jpn77,
                       name = "八地方区分")
 ```
 
-![](man/figures/README-demo_jpn77-2.png)
+![](man/figures/README-demo_jpn77-2.png) 東京23区
+
+``` r
+tabularmap(tky23,
+           label = ward_kanji,
+           family = "IPAexGothic") +
+  theme_tabularmap(base_family = "IPAexGothic") +
+  guides(fill = FALSE)
+```
+
+![](man/figures/README-demo_tky23-2.png)
 
 **国際**
 

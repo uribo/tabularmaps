@@ -53,6 +53,18 @@ tabularmap(jpn77,
 ```
 
 ![](man/figures/README-demo_jpn77-2.png)
+東京23区
+
+```{r demo_tky23, eval=FALSE, echo=TRUE}
+tabularmap(tky23,
+           label = ward_kanji,
+           family = "IPAexGothic") +
+  theme_tabularmap(base_family = "IPAexGothic") +
+  guides(fill = FALSE)
+```
+
+![](man/figures/README-demo_tky23-2.png)
+
 
 **国際**
 
