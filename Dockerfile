@@ -1,4 +1,4 @@
-FROM rocker/geospatial:3.6.2
+FROM rocker/geospatial:3.6.3
 
 RUN set -x && \
   apt-get update && \
@@ -13,7 +13,7 @@ RUN set -x && \
   echo "GITHUB_PAT=$GITHUB_PAT" >> /usr/local/lib/R/etc/Renviron
 
 RUN set -x && \
-  install2.r --error --repos 'http://mran.revolutionanalytics.com/snapshot/2020-03-29' \
+  install2.r --error --repos 'http://mran.revolutionanalytics.com/snapshot/2020-04-20' \
     countrycode \
     ggplot2 \
     zipangu \
