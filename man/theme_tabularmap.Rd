@@ -7,7 +7,7 @@
 theme_tabularmap(...)
 }
 \arguments{
-\item{...}{all other arguments passed on to \code{\link[ggplot2:theme_minimal]{ggplot2::theme_minimal()}}}
+\item{...}{all other arguments passed on to \code{\link[ggplot2:ggtheme]{ggplot2::theme_minimal()}}}
 }
 \description{
 Custom ggplot2 theme for tabulamap.

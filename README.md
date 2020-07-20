@@ -34,6 +34,9 @@ library(ggplot2)
 
 ``` r
 tabularmap(jpn77, 
+           x,
+           y,
+           group = prefecture,
            fill = region_kanji, 
            label = prefecture_kanji, 
            size = 3,
@@ -47,8 +50,13 @@ tabularmap(jpn77,
 
 ``` r
 tabularmap(tky23,
+           x,
+           y,
+           group = ward,
+           fill = ward,
            label = ward_kanji,
-           family = "IPAexGothic") +
+           family = "IPAexGothic",
+           .expand_size = 12.5) +
   theme_tabularmap(base_family = "IPAexGothic") +
   guides(fill = FALSE)
 ```
@@ -61,9 +69,14 @@ ISO-3166による国名
 
 ``` r
 tabularmap(iso3166, 
+           x,
+           y,
+           group = iso3c,
            fill = continent, 
            label = iso3c, 
-           size = 2) +
+           size = 2,
+           .expand_size = 20, 
+           .radius_size = 10) +
   theme_tabularmap() +
   guides(fill = guide_legend(title = "Continent")) +
   theme(legend.title = element_text(size = 10),
@@ -76,4 +89,5 @@ tabularmap(iso3166,
 
   - [geofacet](https://github.com/hafen/geofacet)
   - [ggpol](https://github.com/erocoar/ggpol)
+  - [statebins](https://github.com/hrbrmstr/statebins)
   - [waffle](https://github.com/hrbrmstr/waffle)

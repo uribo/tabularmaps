@@ -1,55 +1,68 @@
 #' @title Create Tile-Grid
 #'
-#' @description A ggplot2-based tabularmap that places a coordinated dataset in a rectangle.
+#' @description A ggplot2-based tabularmap that places a coordinated dataset
+#' in a rectangle.
 #' @import ggplot2
 #' @import rlang
-#' @importFrom dplyr select
-#' @param data data.frame. Contain x, y variables used as coordinates.
+#' @importFrom ggforce geom_shape
+#' @importFrom purrr pluck
+#' @param data data.frame. Contain x, y, group and label variables used as
+#' coordinates.
+#' @param x,y A column containing the numbers to line up the items.
+#' @param group Group variable.
 #' @param fill Fill colour variable.
 #' @param label Label variable.
-#' @param ... All other arguments passed on to [ggplot2::geom_text()] include label `family`.
+#' @param ... All other arguments passed on to [ggplot2::geom_text()]
+#' include label `family`.
+#' @param .expand_size The value specified in the `expand` argument of
+#' [ggforce::geom_shape()]. The unit is in mm.
+#' @param .radius_size The value specified in the `radius` argument of
+#' [ggforce::geom_shape()]. The unit is in pt.
 #' @examples
 #' library(ggplot2)
-#' tabularmap(jpn77, label = prefecture, size = 3)
-#' tabularmap(jpn77, fill = region, label = prefecture, size = 3)
-#' tabularmap(jpn77, fill = region, label = prefecture, size = 3) +
+#' tabularmap(jpn77, x, y, group = jis_code, label = prefecture, size = 3)
+#' tabularmap(jpn77, x, y, group = jis_code, fill = region, label = prefecture, size = 3) +
 #'   theme_tabularmap() +
 #'   scale_fill_jpregion(lang = "en")
 #' tabularmap(data.frame(
-#'   x = rep(c(1,2,3), each = 3),
-#'   y = rep(c(1,2,3), times = 3),
-#'   fill = seq.int(9),
-#'   label = letters[seq.int(9)]),
-#'   fill = fill, label = label)
-#' # Global (ISO 3166 code)
-#' tabularmap(iso3166, fill = 1, label = iso2c) +
+#'              id = letters[seq.int(9)],
+#'              x = rep(c(1,2,3), each = 3),
+#'              y = rep(c(1,2,3), times = 3),
+#'              fill = seq.int(9),
+#'              label = letters[seq.int(9)]),
+#'   x, y,
+#'   group = id,
+#'   fill = fill,
+#'   label = label,
+#'   .expand_size = 20, .radius_size = 10)
+#' tabularmap(iso3166, x, y, group = iso2c,
+#'            fill = continent,
+#'            label = iso2c,
+#'            .expand_size = 5) +
 #'   theme_tabularmap() +
 #'   guides(fill = FALSE)
-#' tabularmap(iso3166, fill = continent, label = iso3c) +
-#'   theme_tabularmap()
 #' @rdname tabularmap
 #' @export
-tabularmap <- function(data, fill = 1, label, ...) {
-  x <- y <- value <- NULL
-  data_adjust <-
-    dplyr::select(data,
-                  x,
-                  y,
-                  value = !! rlang::enquo(fill),
-                  label = !! rlang::enquo(label))
-  p <- ggplot2::ggplot(data_adjust,
-                       ggplot2::aes(xmin = x, ymin = y, xmax = x + 1, ymax = y + 1)) +
-    ggplot2::geom_rect(ggplot2::aes(fill = value),
-                       color = "white") +
-    ggplot2::geom_text(ggplot2::aes(x, y, label = !! rlang::quo(label)),
-                       nudge_x = 0.5, nudge_y = 0.5,
-                       ...) +
-    ggplot2::coord_equal() +
-    ggplot2::scale_x_continuous(limits = c(1, max(data_adjust$x) + 1),
-                       expand = ggplot2::expansion(add = c(0.5, 0.5))) +
-    ggplot2::scale_y_continuous(limits = c(1, max(data_adjust$y) + 1),
-                       expand = ggplot2::expansion(add = c(0.5, 0.5)))
-  suppressWarnings(print(p))
+tabularmap <- function(data, x, y, group, fill = NULL, label = NULL, ...,
+                       .expand_size = 10, .radius_size = 2) {
+  ggplot(data, aes(x = {{ x }}, y = {{ y }})) +
+    ggforce::geom_shape(aes(fill = {{ fill }}, group = {{ group }}),
+                        expand = unit(.expand_size, "mm"),
+                        radius = unit(.radius_size, "pt")) +
+    geom_text(aes(label = {{ label }}), ...) +
+    coord_equal() +
+    scale_x_continuous(
+      limits = c(0.5,
+                 max(purrr::pluck(data,
+                                  rlang::quo_text(rlang::enquo(x))),
+                     na.rm = TRUE) + 0.5),
+      expand = expansion(add = c(0.5, 0.5))) +
+    scale_y_continuous(
+      limits = c(0.5,
+                 max(purrr::pluck(data,
+                                  rlang::quo_text(rlang::enquo(y))),
+                     na.rm = TRUE) + 0.5),
+      expand = expansion(add = c(0.5, 0.5)))
 }
 
 #' @title Tabularmap theme

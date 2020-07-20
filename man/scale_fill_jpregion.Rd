@@ -9,7 +9,7 @@ scale_fill_jpregion(lang, ...)
 \arguments{
 \item{lang}{Select whether the region variable is Japanese (\code{jp}) or English (\code{en}).}
 
-\item{...}{all other arguments passed on to \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}}
+\item{...}{all other arguments passed on to \code{\link[ggplot2:scale_manual]{ggplot2::scale_fill_manual()}}}
 }
 \description{
 Custom ggplot2 scale for tabulamap.

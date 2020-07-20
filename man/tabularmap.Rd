@@ -4,37 +4,64 @@
 \alias{tabularmap}
 \title{Create Tile-Grid}
 \usage{
-tabularmap(data, fill = 1, label, ...)
+tabularmap(
+  data,
+  x,
+  y,
+  group,
+  fill = NULL,
+  label = NULL,
+  ...,
+  .expand_size = 10,
+  .radius_size = 2
+)
 }
 \arguments{
-\item{data}{data.frame. Contain x, y variables used as coordinates.}
+\item{data}{data.frame. Contain x, y, group and label variables used as
+coordinates.}
+
+\item{x, y}{A column containing the numbers to line up the items.}
+
+\item{group}{Group variable.}
 
 \item{fill}{Fill colour variable.}
 
 \item{label}{Label variable.}
 
-\item{...}{All other arguments passed on to \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} include label \code{family}.}
+\item{...}{All other arguments passed on to \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}
+include label \code{family}.}
+
+\item{.expand_size}{The value specified in the \code{expand} argument of
+\code{\link[ggforce:geom_shape]{ggforce::geom_shape()}}. The unit is in mm.}
+
+\item{.radius_size}{The value specified in the \code{radius} argument of
+\code{\link[ggforce:geom_shape]{ggforce::geom_shape()}}. The unit is in pt.}
 }
 \description{
-A ggplot2-based tabularmap that places a coordinated dataset in a rectangle.
+A ggplot2-based tabularmap that places a coordinated dataset
+in a rectangle.
 }
 \examples{
 library(ggplot2)
-tabularmap(jpn77, label = prefecture, size = 3)
-tabularmap(jpn77, fill = region, label = prefecture, size = 3)
-tabularmap(jpn77, fill = region, label = prefecture, size = 3) +
+tabularmap(jpn77, x, y, group = jis_code, label = prefecture, size = 3)
+tabularmap(jpn77, x, y, group = jis_code, fill = region, label = prefecture, size = 3) +
   theme_tabularmap() +
   scale_fill_jpregion(lang = "en")
 tabularmap(data.frame(
-  x = rep(c(1,2,3), each = 3),
-  y = rep(c(1,2,3), times = 3),
-  fill = seq.int(9),
-  label = letters[seq.int(9)]),
-  fill = fill, label = label)
-# Global (ISO 3166 code)
-tabularmap(iso3166, fill = 1, label = iso2c) +
+             id = letters[seq.int(9)],
+             x = rep(c(1,2,3), each = 3),
+             y = rep(c(1,2,3), times = 3),
+             fill = seq.int(9),
+             label = letters[seq.int(9)]),
+  x, y,
+  group = id,
+  fill = fill,
+  label = label,
+  .expand_size = 20, .radius_size = 10)
+tabularmap(iso3166, x, y, group = iso2c,
+           fill = continent,
+           label = iso2c,
+           .expand_size = 5) +
   theme_tabularmap() +
   guides(fill = FALSE)
-tabularmap(iso3166, fill = continent, label = iso3c) +
-  theme_tabularmap()
 }
