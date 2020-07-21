@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/tabularmaps)](https://cran.r-project.org/package=tabularmaps)
+[![R build status](https://github.com/uribo/tabularmaps/workflows/R-CMD-check/badge.svg)](https://github.com/uribo/tabularmaps/actions)
 <!-- badges: end -->
 
 tabularmapsは、CC0で公開されている[カラム地図プロジェクト](https://github.com/tabularmaps/hq)が進める行政区分等のグリッドレイアウトによる可視化をRパッケージとして提供するものです。

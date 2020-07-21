@@ -6,3 +6,4 @@
 ^Dockerfile$
 ^docker-compose\.yaml$
 ^README\.Rmd$
+^\.github$
