@@ -7,3 +7,4 @@
 ^docker-compose\.yaml$
 ^README\.Rmd$
 ^\.github$
+^cran-comments\.md$
