@@ -7,7 +7,7 @@ Authors@R: c(
            email = "suika1127@gmail.com",
            role  = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0493-6186")))
-Description: The `tabularmap` is one of the visualization methods for 
+Description: The 'tabularmap' is one of the visualization methods for 
     efficiently displaying data consisting of multiple elements by tiling them.
     When dealing with geospatial, it corrects for differences in visibility 
     between areas.
